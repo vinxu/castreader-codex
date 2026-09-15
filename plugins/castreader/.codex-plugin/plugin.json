@@ -1,0 +1,42 @@
+{
+  "name": "castreader",
+  "version": "0.1.0",
+  "description": "Build runnable speech features and generate playable audio with cost estimates and restartable jobs.",
+  "author": {
+    "name": "CastReader",
+    "url": "https://voice.castreader.com"
+  },
+  "homepage": "https://voice.castreader.com/integrations/codex",
+  "license": "MIT",
+  "keywords": [
+    "text-to-speech",
+    "tts",
+    "audio",
+    "voice",
+    "codex",
+    "speech-api"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "CastReader",
+    "shortDescription": "Build voice features and generate playable audio.",
+    "longDescription": "Add CastReader speech to a working application, or generate MP3 and WAV files from text. Includes a runnable local app, server-side key handling, live cost estimates, persisted jobs, recovery and audio receipts. API usage uses your CastReader Voice trial or wallet, separately from CastReader App Pro.",
+    "developerName": "CastReader",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Write"
+    ],
+    "websiteURL": "https://voice.castreader.com/integrations/codex",
+    "privacyPolicyURL": "https://castreader.com/privacy-policy",
+    "termsOfServiceURL": "https://castreader.com/terms-of-service",
+    "defaultPrompt": [
+      "Add a working text-to-speech feature to my app.",
+      "Generate an MP3 from this text and show the cost.",
+      "Resume my interrupted CastReader audio job."
+    ],
+    "brandColor": "#E9653B",
+    "logo": "./assets/logo.png",
+    "composerIcon": "./assets/logo.png"
+  },
+  "repository": "https://github.com/vinxu/castreader-codex"
+}

@@ -1,0 +1,20 @@
+{
+  "name": "castreader",
+  "interface": {
+    "displayName": "Castreader"
+  },
+  "plugins": [
+    {
+      "name": "castreader",
+      "source": {
+        "source": "local",
+        "path": "./plugins/castreader"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
