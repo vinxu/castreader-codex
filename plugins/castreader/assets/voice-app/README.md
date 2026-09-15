@@ -36,7 +36,7 @@ npm start
 
 `.env` files are not loaded automatically. Never paste keys into the browser,
 source files, URLs or a public report. The SDK installs directly from the
-official `voice.castreader.com` download, pinned to **0.2.2**; it is not installed
+official `voice.castreader.com` download, pinned to **0.2.3**; it is not installed
 by an npm registry package name. No SDK upgrade is required for this starter.
 
 1. **Load ready voices.** The local server reads the API's model and voice lists

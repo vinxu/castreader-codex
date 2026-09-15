@@ -8,12 +8,12 @@ const voice='voice_'+'a'.repeat(32), job='job_'+'b'.repeat(32);
 const estimate={reservation_created:false,balance_sufficient:true,maximum_charge_usd:'0.000320',estimated_charge_usd:'0.000320'};
 const input={text:'Hello from CastReader.',language:'en'};
 const audio=Buffer.concat([Buffer.from('ID3'),Buffer.alloc(32)]);
-function fixture({ drop=false, fail=false, pending=false, badAudio=false, budget='0.000320', evilRoute=false }={}) {
+function fixture({ drop=false, fail=false, pending=false, badAudio=false, budget='0.000320', evilRoute=false, cn=false }={}) {
   const calls=[], keys=[];let submissions=0;
   const fetchImpl=async(url,opts)=>{
-    const path=new URL(url).pathname;calls.push({path,method:opts.method});
+    const path=new URL(url).pathname;calls.push({url:String(url),path,method:opts.method});
     const json=data=>new Response(JSON.stringify(data),{headers:{'content-type':'application/json','retry-after':'0'}});
-    if(path.endsWith('/route'))return json({base_url:evilRoute?'https://evil.example/v1':'https://voice.castreader.com/v1'});
+    if(path.endsWith('/route'))return json({base_url:evilRoute?'https://evil.example/v1':cn?'https://api.castreader.cn/voice-api/v1':'https://voice.castreader.com/v1'});
     if(path.endsWith('/models'))return json({data:[{id:'clone-v1',languages:['en']}]});
     if(path.endsWith('/voices'))return json({data:[{id:voice,status:'ready',name:'Rowan',default_voice_key:'narrator'}]});
     if(path.endsWith('/usage/estimate'))return json({...estimate,maximum_charge_usd:budget});
@@ -36,3 +36,23 @@ test('tampered input cannot reuse old paid request identity',async t=>{const out
 test('JSON response cannot be saved as MP3',async t=>{const output=await dir(t),f=fixture({badAudio:true});await createPlan({...f,input,output,maxUSD:'0.01'});await assert.rejects(runPlan({...f,output}),{code:'invalid_audio_type'});await assert.rejects(readFile(join(output,'audio.mp3')),{code:'ENOENT'});});
 test('untrusted routing never receives the key',async()=>{const f=fixture({evilRoute:true});await assert.rejects(f.client.prepare(input),{code:'invalid_route'});assert.equal(f.calls.length,1);});
 test('missing or corrupted local output redownloads original job',async t=>{const output=await dir(t),f=fixture();await createPlan({...f,input,output,maxUSD:'0.01'});const result=await runPlan({...f,output});await writeFile(result.path,'corrupt');const recovered=await runPlan({...f,output});assert.deepEqual(await readFile(result.path),audio);assert.equal(recovered.sha256,result.sha256);assert.equal(f.keys.length,1);});
+test('China route uses api.castreader.cn without contacting the retired domain',async t=>{
+  const output=await dir(t),f=fixture({cn:true});
+  assert.equal((await createPlan({...f,input,output,maxUSD:'0.01'})).region,'cn');
+  assert.equal((await runPlan({...f,output})).region,'cn');
+  assert.ok(f.calls.every(c=>c.url.startsWith('https://api.castreader.cn/voice-api/v1/')||c.url.startsWith('https://voice.castreader.com/v1/route')));
+});
+test('legacy China checkpoint resumes original job at new endpoint without submitting again',async t=>{
+  const output=await dir(t),f=fixture({cn:true,pending:true});
+  await createPlan({...f,input,output,maxUSD:'0.01'});
+  await runPlan({...f,output,waitMs:0});
+  const path=join(output,'state.json'),state=JSON.parse(await readFile(path));
+  state.base='https://voice.castreader.cn/v1';await writeFile(path,JSON.stringify(state));
+  const count=f.calls.length;
+  await runPlan({...f,output,waitMs:0});
+  const saved=JSON.parse(await readFile(path));
+  assert.equal(saved.base,'https://api.castreader.cn/voice-api/v1');
+  assert.equal(saved.bodyHash,state.bodyHash);assert.equal(saved.idempotencyKey,state.idempotencyKey);assert.equal(saved.job.id,state.job.id);
+  assert.equal(f.keys.length,1);
+  assert.ok(f.calls.slice(count).every(c=>c.method==='GET'&&c.url.startsWith('https://api.castreader.cn/voice-api/v1/jobs/')));
+});

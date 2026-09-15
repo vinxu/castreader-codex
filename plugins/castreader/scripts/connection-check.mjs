@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const origin = 'https://voice.castreader.com';
-const bases = new Set([`${origin}/v1`, 'https://voice.castreader.cn/v1']);
+const bases = new Set([`${origin}/v1`, 'https://api.castreader.cn/voice-api/v1']);
 export const recovery = {
   missing_key: 'Verify and activate at /request-access; create a key in the console. Keep it on your server.',
   invalid_api_key: 'Check the key in your server environment. Replace expired or revoked keys; never paste secrets into a prompt.',

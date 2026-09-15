@@ -12,6 +12,6 @@
     "generate": "node generate.mjs --run"
   },
   "dependencies": {
-    "@castreader/voice-api": "https://voice.castreader.com/sdk/castreader-voice-api-0.2.2.tgz"
+    "@castreader/voice-api": "https://voice.castreader.com/sdk/castreader-voice-api-0.2.3.tgz"
   }
 }

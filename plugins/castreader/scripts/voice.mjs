@@ -6,7 +6,8 @@ import { resolve, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 export const ORIGIN = 'https://voice.castreader.com';
-const BASES = new Set([`${ORIGIN}/v1`, 'https://voice.castreader.cn/v1']);
+const CN_BASE = 'https://api.castreader.cn/voice-api/v1';
+const BASES = new Set([`${ORIGIN}/v1`, CN_BASE]);
 const TERMINAL = new Set(['succeeded', 'failed', 'cancelled', 'expired']);
 const hash = data => createHash('sha256').update(data).digest('hex');
 const sleep = ms => new Promise(done => setTimeout(done, ms));
@@ -140,6 +141,8 @@ export async function runPlan({ client, output, waitMs = 45000, sleepImpl = slee
   try {
     await lock.writeFile(String(process.pid));
     const statePath = join(dir, 'state.json'), state = await readJson(statePath);
+    // Migrate the exact retired endpoint, retaining the original job and billing identity.
+    if (state?.base === 'https://voice.castreader.cn/v1') state.base = CN_BASE;
     if (!state || state.version !== 1 || !BASES.has(state.base) || hash(JSON.stringify(state.body)) !== state.bodyHash || !/^castreader-[a-f0-9-]{36}$/.test(state.idempotencyKey)) fail('invalid_checkpoint');
     inputBody(state.body); const cap = money(state.maxUSD);
     const audioPath = join(dir, `audio.${state.body.output_format}`);

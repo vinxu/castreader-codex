@@ -1,6 +1,6 @@
 {
   "name": "castreader",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Build runnable speech features and generate playable audio with cost estimates and restartable jobs.",
   "author": {
     "name": "CastReader",
