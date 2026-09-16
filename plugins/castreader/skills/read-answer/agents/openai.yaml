@@ -1,0 +1,4 @@
+interface:
+  display_name: "Read an answer with CastReader"
+  short_description: "Check original-answer guided reading readiness"
+  default_prompt: "Use $read-answer to verify desktop DOM access, then read the previous answer with synchronized original-text highlighting."

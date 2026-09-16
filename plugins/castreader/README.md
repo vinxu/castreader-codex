@@ -11,13 +11,16 @@ codex plugin marketplace add vinxu/castreader-codex
 codex plugin add castreader@castreader
 ```
 
-Start a new Codex task after installation. In Codex, invoke `$build-voice-app` or `$generate-audio`, or select CastReader in the plugin picker. The public Git marketplace is distinct from the OpenAI-reviewed Plugins Directory; directory approval is not implied by this repository.
+Start a new Codex task after installation. In the published version, invoke `$build-voice-app` or `$generate-audio`, or select CastReader in the plugin picker. [OpenAI Plugins Directory](https://chatgpt.com/plugins/plugins_6aaaa52666208191b7e575b264f338a9) version 0.1.2 is published. This working tree also contains an unreleased, experimental `$read-answer` workflow. The Git release and directory release can update at different times; check the version in each installer.
 
 Example requests:
 
 - “Add text-to-speech to this app and run it locally.”
 - “Turn this paragraph into an MP3. Show me the cost.”
 - “Resume the CastReader job in this output folder.”
+- “Read your previous answer aloud.” / “朗读刚才的回答。”
+
+The experimental read-answer workflow requires TTS plus synchronized highlighting in the original Codex desktop answer. No verified desktop DOM adapter is bundled yet, so it stops before billable generation. A standalone audio file, browser page or copied-text reader does not satisfy this workflow. Use generate-audio for an explicit audio-file request. The experiment is not a released guided-reading feature.
 
 ## Requirements and cost
 
