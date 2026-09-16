@@ -2,6 +2,8 @@
 
 This is a separate Electron test host, **not an integration with Codex**. It does not connect to, inspect, patch, or launch Codex. Its purpose is to establish that real CastReader audio can drive highlights in an existing HTML answer while preserving its markup.
 
+The same renderer has now also passed 14/14 checks in **Codex's in-app browser panel**. This is a CastReader-owned page, with its own answer copy; the original chat answer is not accessed. See [the side-panel report](IN-APP-RESULTS.md).
+
 ## Run
 
 Requires Node.js, Electron, and a retained CastReader generation folder containing `audio.wav`, `receipt.json`, and `timestamps.json`. The sample answer is deliberately fixed to the retained fixture: `Hello. CastReader turns your ideas into playable audio.`
@@ -19,6 +21,17 @@ electron experiments/desktop-dom-sync/main.cjs /absolute/lab-run
 `prepare.mjs` verifies the audio's receipt hash and requires exactly one aligned segment. It copies audio and alignment into the private run directory, without copying account keys or job state. It does not generate or charge for audio. Multi-segment offsets must come from the actual audio layout; this bench does not guess them.
 
 The automated run saves `browser-results.json` and `screenshot.png`. Test playback is real media playback through Chromium, with sandbox and context isolation enabled. The audio's audible pronunciation and perceptual timestamp accuracy still need listening review; the automated checks verify clock-driven rendering and media behavior.
+
+## Codex browser-panel experiment
+
+After preparing the same verified fixture, start its local read-only server:
+
+```sh
+node --test experiments/desktop-dom-sync/server.test.mjs
+node experiments/desktop-dom-sync/server.mjs /absolute/lab-run/app
+```
+
+Open the printed loopback URL in Codex's browser panel. Click **运行同步测试** for the 14 UI checks, or **播放指读** for manual playback. The server implements byte-range requests so audio seeking works. Its terminal must remain running while using the page; it performs no synthesis or API calls.
 
 ## Mechanism
 

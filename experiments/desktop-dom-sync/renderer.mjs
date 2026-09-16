@@ -47,6 +47,7 @@ function checkPaint(index){
 }
 async function test(name,fn){try{await fn();results.push({name,passed:true});}catch(error){results.push({name,passed:false,error:error.message});}}
 window.runSyncTests=async()=>{
+ results.length=0;
  await ready();
  await test('真实 WAV 与时间戳时长匹配',()=>assert(Math.abs(audio.duration-window.fixture.duration)<.03,'Audio/alignment duration mismatch'));
  await test('8 个词逐个跳转，命中原文 Range',async()=>{
@@ -116,5 +117,13 @@ window.runSyncTests=async()=>{
  document.getElementById('summary').textContent=`${results.filter(r=>r.passed).length}/${results.length} 项实验通过。当前画面停在 ideas，方便检查原文定位。`;
  document.getElementById('summary').className=passed?'success':'';
  document.getElementById('checks').replaceChildren(...results.map(r=>{const e=document.createElement('div');e.textContent=(r.passed?'✓ ':'✗ ')+r.name+(r.error?' — '+r.error:'');return e;}));
- return {passed,environment:navigator.userAgent,fixture:{source:'Existing CastReader API generation',generatedAt:window.fixture.generatedAt,duration:audio.duration,wordCount:words.length,audioSha256:window.fixture.audioSha256,newGenerationChargeUSD:'0.000000'},results,codexHostIntegrationTested:false,finalState:reader.snapshot()};
+ const report={passed,environment:navigator.userAgent,fixture:{source:'Existing CastReader API generation',generatedAt:window.fixture.generatedAt,duration:audio.duration,wordCount:words.length,audioSha256:window.fixture.audioSha256,newGenerationChargeUSD:'0.000000'},results,codexHostIntegrationTested:false,finalState:reader.snapshot()};
+ document.getElementById('test-report').textContent=JSON.stringify(report,null,2);
+ return report;
+};
+document.getElementById('run-checks').onclick=async event=>{
+ const button=event.currentTarget;button.disabled=true;button.textContent='正在测试…';
+ try{await window.runSyncTests();}
+ catch(error){document.getElementById('summary').textContent=`测试未完成：${error.message}`;}
+ finally{button.disabled=false;button.textContent='运行同步测试';}
 };
