@@ -31,10 +31,10 @@
       "fixture": "npm test: missing or corrupted local output scenario"
     },
     {
-      "prompt": "朗读刚才的回答。",
-      "expected": "read-answer checks the original desktop-answer DOM adapter first. With the current package it reports the missing adapter and stops before synthesis. It does not substitute an audio-only result or browser page.",
-      "result": "Accurate capability status; no synthesis request or charge",
-      "fixture": "Current experimental package with no verified desktop DOM adapter; prior answer visible"
+      "prompt": "Read my previous English answer with CastReader.",
+      "expected": "Preserve the exact Markdown and automatically open the right-side reader. Require CastReader login, enforce existing Web free minutes or Pro, then start TTS and real word highlights without a developer API key.",
+      "result": "Formatted answer, account status, synchronized reading; login or quota gate when required.",
+      "fixture": "English answer visible; existing consumer account. Public directory remains 0.1.2 until approved update."
     }
   ],
   "negative": [
@@ -56,7 +56,7 @@
     {
       "prompt": "Highlight the words in the original Codex answer as you read them.",
       "expected": "Check for a verified desktop DOM adapter and real alignment before generation. If absent, stop without charging; never bypass a tool's denial of access to Codex itself or claim a substitute panel is the original answer.",
-      "reason": "Desktop DOM integration is unverified; developer Voice API alignment is optional and English-only"
+      "reason": "No supported original-chat DOM adapter. The supported preview reads a separate, formatted side-panel page."
     }
   ]
 }

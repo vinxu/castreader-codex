@@ -1,49 +1,44 @@
 ---
 name: read-answer
-description: Prepare on-request CastReader reading of a Codex answer with synchronized highlighting in the original answer. Use for 朗读刚才的回答 or read your answer aloud. Requires a verified host DOM adapter; report an unavailable adapter before generating audio.
+description: Read a Codex answer aloud with CastReader in the right-side reading page, preserving Markdown formatting and highlighting spoken words. Use for 朗读刚才的回答, read this answer aloud, or synchronized answer reading. Requires CastReader login; uses daily free minutes or existing Pro, not a developer API key.
 ---
 
-# Read an answer aloud
+# Read a Codex answer
 
-The required outcome is TTS plus synchronized pointing at the text of the original Codex desktop answer. The plugin root is two directories above this file. This is an experimental workflow: no verified desktop host DOM adapter is bundled yet. Installing this skill does not grant access to the desktop chat renderer.
+Use the CastReader membership reading page in Codex's right-side browser. This workflow is separate from the developer Voice API used by build-voice-app and generate-audio. Never ask for CASTREADER_API_KEY, a developer wallet top-up, or a per-character budget for membership answer reading.
 
-## Check the desktop integration before synthesis
+## Preserve the answer
 
-1. Preserve the requested surface: Codex desktop's original answer. Do not substitute a browser page, copied text panel, audio file, screenshot overlay or simulated progress for a requested DOM integration.
-2. Check for an explicitly supported and verified host adapter that can identify the selected visible answer, read its DOM text ranges, paint and clear highlights, and detect when the answer changes or disappears. Electron internals, an iframe UI, hooks, or access to a local shell do not establish these capabilities.
-3. If no adapter is available, stop before billable synthesis and state that original-answer pointing is unavailable. Do not start debugging ports, modify the installed Codex bundle, disable isolation, or use another route to bypass a tool's denial of access to Codex itself.
-4. Once a host adapter is available, first verify a reversible highlight on the selected answer and its cleanup. Require real audio alignment for the selected language. The current developer Voice API only offers optional English alignment; unavailable alignment must not be replaced by timings inferred from text length.
+1. Select the complete most recent substantive assistant answer before the request, unless the user selects another answer or excerpt. Use visible conversation context only. Do not read hidden reasoning, system messages, unrelated history or tool logs.
+2. Save the **exact original Markdown** in a private local `.md` file outside source control. Preserve headings, paragraphs, numbered and nested lists, emphasis, links, tables, blockquotes and code fences. Do not strip styling, summarize, translate, rewrite tables or remove code blocks. Do not scrape or patch the Codex application renderer.
+3. The initial synchronized-reading preview supports English. If the selected answer is another language, explain that reliable alignment is not ready for that language; do not generate unaligned audio or translate without a request. The full source must fit 120 KB; do not silently truncate a longer answer.
 
-Only continue below after the original-answer adapter has passed that check. A request explicitly limited to an audio file can use the separate [generate-audio skill](../generate-audio/SKILL.md).
+## Automatically open and read
 
-## Select and prepare the spoken text
+The plugin root is two directories above this skill. Run:
 
-- Use the most recent substantive assistant answer before the read-aloud request, unless the user selects a different answer or excerpt. Use visible conversation context; if it is unavailable, ask for the missing text. Do not substitute an acknowledgement, invent a prior answer, or read hidden reasoning, system instructions, tool output or unrelated conversation history.
-- Preserve the answer's language, meaning, numbers, qualifications and order. This is narration, not a summary or translation unless requested.
-- For the default spoken edition, strip Markdown styling, speak link labels, and skip fenced code blocks. Preserve meaningful inline code such as a product or function name. Render tables as short row-by-row sentences with their headers and values. Briefly disclose skipped code blocks; include them when the user specifically asks. Do not fetch links merely to read the answer.
-- Save the prepared text privately outside source control. Send only that text to CastReader, not the full conversation. Never include credentials or hidden/private state. Select the spoken language explicitly; retain mixed-language content without promising separate voices or unsupported alignment.
+```bash
+node <plugin-root>/scripts/read-answer.mjs --markdown /absolute/private/answer.md --language en --title "Codex answer"
+```
 
-## Generate with one total budget
+Keep the returned local server process running while opening the short `url` from its JSON output. The handoff is bound to loopback and expires after fifteen minutes; it does not serve the workspace. It redirects to the CastReader reader with the full Markdown in a URL fragment, which is removed immediately and saved only in that tab. Only individual spoken segments are sent to the consumer TTS service.
 
-Read the linked audio workflow for the existing `scripts/voice.mjs` plan/run/resume commands and current capabilities. `CASTREADER_API_KEY` stays in the server environment. Without a configured key, save the spoken text and explain the setup needed; do not present the public demo as this answer's audio.
+Use the available Codex `open_in_codex` tool with `placement: "right"`, `target.type: "browser"` and this URL. If an in-app browser tab is already under control, navigate that tab then open its verified provider tab ID on the right. Do not stop at handing the user a link or require them to copy and paste the answer.
 
-For a short request with no budget, show the live estimate before generation and use **$0.01 for the entire answer**, not $0.01 for each chunk. The user's request to read aloud authorizes ordinary synthesis within that ceiling. Ask only if the total estimate exceeds the authorized budget. Never top up or change subscriptions.
+The page checks the real CastReader session and membership before speech. An existing login automatically starts reading. If browser autoplay is blocked, use the visible **开始朗读** button through the supported browser tool, since the user's read-aloud request authorizes playback. Never alter account state or fabricate entitlement through page scripts.
 
-For an answer longer than the current per-job limit:
+If login is required, leave the formatted answer visible and have the user complete CastReader Google login. Credentials and verification remain with the user. The same tab returns to the answer after login and preserves its position. Do not request another account solely for the plugin.
 
-1. Split the complete prepared text at paragraph/sentence boundaries, falling back to Unicode code-point boundaries. Keep every spoken word in order, with no missing or duplicated text. Each chunk must fit the live API limit (currently at most 500 normalized code points).
-2. Save numbered inputs and stable output folders (`part-001`, `part-002`, ...) plus a private ordered manifest of chunk text hashes, paths and allocated budgets before submitting any generation.
-3. Plan all chunks first. Sum their maximum charge estimates. Allocate per-chunk `--max-usd` values whose sum is at most the authorized total; a zero-charge trial estimate is not a guarantee that a later chunk remains free. Stop before synthesis if the plans do not fit. The API estimate is not a reserved price quote.
-4. Run sequentially, using each saved plan. On interruption, resume existing part folders. A pending or unknown chunk keeps its original request identity; terminal failures stop the answer without silently generating replacements. Already completed parts retain their receipts and can be played.
+## Quota, subscription and recovery
 
-## Verify synchronized reading
+- Reuse the canonical CastReader consumer account, server-enforced twenty free AI voice minutes per local day, and Pro unlimited ordinary reading. Reading minutes count actual playback time, excluding pause and buffering. Cached replay avoids another synthesis but still counts listening time for Free accounts.
+- The free speed ceiling is 1.25×; higher speeds require Pro. Voice cloning has separate rules and is not offered by this reader.
+- When the service reports exhausted quota, display the existing CastReader subscription page. The user chooses and completes purchase. A payment success URL is not proof of Pro: resume only after the authenticated membership endpoint verifies entitlement.
+- Keep exact source, current segment, playback position and account-bound audio cache across login/checkout return and refresh. Never automatically retry an ambiguous in-flight synthesis; the page preserves its pending marker to prevent duplicate generation.
+- Do not use the developer Voice API as a fallback around login or the daily allowance. Do not top up, buy or change subscriptions on the user's behalf merely because they asked for reading.
 
-Bind playback to the verified original-answer adapter. Advance the highlight using actual playback time and real timestamps, preserving each segment's local timebase. Seek, pause and rate changes must use the same audio clock. Clear the highlight on stop/end; stop when the answer is replaced, detached or no longer maps reliably. Do not claim success until playback and highlight positions have been observed together on the desktop answer.
+## Verify before reporting success
 
-## Return evidence and optional audio
+Observe the selected answer's formatting, actual audio playback, and a corresponding highlighted word in the **right-side reading page**. Highlighter timing must follow audio.currentTime, including pause, seek and speed changes. No guessed timings, plain audio-only fallback or claims of original-chat DOM highlighting.
 
-Verify each completed file is decodable. For multiple parts, use an available media tool to concatenate verified files in the saved order; otherwise provide numbered audio players and state that playback is split into parts. Do not silently drop failed or pending parts.
-
-Render the absolute audio path with Markdown audio syntax, for example `![Read-aloud answer](/absolute/readout/audio.mp3)`. Report the total actual charge from receipts once per unique part and the trial characters used. Reuse verified local files on replay without generating again. If the host supports requested playback, play the result; otherwise leave visible playback controls.
-
-An audio file is an auxiliary artifact, not proof of synchronized original-answer reading. Report the host and version tested, adapter used, alignment availability, and which playback/highlight checks actually passed. Keep experimental and publicly released capabilities distinct.
+If the page reports unavailable timing, mismatched words, failed login or failed synthesis, describe the actual blocker and preserve the answer. A working local fixture is not proof of successful production membership or payment. Public plugin availability and this test build must remain clearly distinguished.

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Read an answer with CastReader"
-  short_description: "Check original-answer guided reading readiness"
-  default_prompt: "Use $read-answer to verify desktop DOM access, then read the previous answer with synchronized original-text highlighting."
+  display_name: "Read a Codex Answer"
+  short_description: "Read formatted answers with synchronized highlighting"
+  default_prompt: "Read my previous answer with CastReader in the right-side page, preserve its formatting, and highlight each spoken word."

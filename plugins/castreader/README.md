@@ -20,9 +20,17 @@ Example requests:
 - “Resume the CastReader job in this output folder.”
 - “Read your previous answer aloud.” / “朗读刚才的回答。”
 
-The experimental read-answer workflow requires TTS plus synchronized highlighting in the original Codex desktop answer. No verified desktop DOM adapter is bundled yet, so it stops before billable generation. A standalone audio file, browser page or copied-text reader does not satisfy this workflow. Use generate-audio for an explicit audio-file request. The experiment is not a released guided-reading feature.
+The preview `$read-answer` workflow automatically opens the full original Markdown in Codex’s right-side CastReader page, checks CastReader login and membership, then reads with real word-level highlighting. Headings, lists, emphasis, links, tables, quotations and code remain displayed. It does not control the original chat DOM. This preview is English-only and is not yet the published directory version.
 
-## Requirements and cost
+Answer reading uses the existing consumer account: twenty free AI voice minutes each day and Pro unlimited ordinary reading. Actual playback time counts toward the daily allowance; cached replay does not generate again. Subscription uses the existing CastReader checkout. **No developer API key or wallet is required for this workflow.**
+
+```sh
+node scripts/read-answer.mjs --markdown /absolute/private/answer.md --language en
+```
+
+Codex opens the returned short loopback URL in its right-side browser automatically. Login and subscription return preserve the answer and position. Actual timestamps drive highlights; missing alignment stops reading. Browser autoplay restrictions may require the visible play button.
+
+## Developer Voice API requirements and cost
 
 Node.js 22+; a verified and activated [CastReader Voice API](https://voice.castreader.com/request-access) account for live generation. Store `CASTREADER_API_KEY` in the backend environment. Never paste keys into chat. The API currently costs $8 per million normalized Unicode code points, before available trial credit. Always use the live estimate. App Pro and API credit are separate.
 
