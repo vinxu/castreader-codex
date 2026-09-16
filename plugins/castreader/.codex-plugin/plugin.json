@@ -1,9 +1,9 @@
 {
   "name": "castreader",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Build runnable speech features and generate playable audio with cost estimates and restartable jobs.",
   "author": {
-    "name": "CastReader",
+    "name": "CAST AI PTE. LTD.",
     "url": "https://voice.castreader.com"
   },
   "homepage": "https://voice.castreader.com/integrations/codex",
@@ -19,9 +19,9 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "CastReader",
-    "shortDescription": "Build voice features and generate playable audio.",
+    "shortDescription": "Build voice apps and audio",
     "longDescription": "Add CastReader speech to a working application, or generate MP3 and WAV files from text. Includes a runnable local app, server-side key handling, live cost estimates, persisted jobs, recovery and audio receipts. API usage uses your CastReader Voice trial or wallet, separately from CastReader App Pro.",
-    "developerName": "CastReader",
+    "developerName": "CAST AI PTE. LTD.",
     "category": "Developer Tools",
     "capabilities": [
       "Write"

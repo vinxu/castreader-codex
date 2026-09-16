@@ -1,10 +1,11 @@
 # Initial public-directory submission
 
 - Type: Skills only
+- Version: 0.1.2
 - Name: CastReader
 - Category: Developer Tools
-- Short description: Build voice features and generate playable audio.
-- Publisher: CastReader; select the matching verified developer/business identity in the portal.
+- Short description: Build voice apps and audio
+- Publisher: CAST AI PTE. LTD.; select this verified business identity in the portal. CastReader is the plugin's product name.
 - Website: https://voice.castreader.com/integrations/codex
 - Support: https://voice.castreader.com/integrations/codex#support
 - Privacy: https://castreader.com/privacy-policy
@@ -25,7 +26,7 @@ Live generation requires your activated CastReader Voice API account and server-
 
 ## Release notes
 
-Initial release with two skills, a dependency-free audio CLI, a runnable audio-card app, input validation, budget checks, region pinning, persisted idempotency, bounded polling, file integrity and receipt handling. Test cases are in test-cases.json. No hosted MCP server is declared in this submission. Public Git marketplace installation and OpenAI directory publication have separate statuses.
+Initial directory submission, version 0.1.2, with two skills, a dependency-free audio CLI, a runnable audio-card app, input validation, budget checks, region pinning, persisted idempotency, bounded polling, file integrity and receipt handling. Includes the current China API ingress and recovery for saved legacy China jobs from 0.1.1. Version 0.1.2 aligns listing metadata with the verified company and documents the current route. Test cases are in test-cases.json. No hosted MCP server is declared in this submission. Public Git marketplace installation and OpenAI directory publication have separate statuses.
 
 ## Review account and availability
 
