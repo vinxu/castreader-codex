@@ -1,6 +1,6 @@
-# Unreleased submission draft — formatted membership reader preview
+# Version 0.1.3 — formatted answer reading
 
-Published directory version remains 0.1.2. This candidate adds an English formatted-answer reader in the right-side page; it does not access the original chat DOM. Record live membership acceptance before submitting the update.
+Update to the published 0.1.2 developer release. Adds an English formatted-answer reader in the right-side page. The user has confirmed production Pro recognition, speech and synchronized highlights. Continuous playback is verified separately under delayed status/reporting responses. Directory approval is a separate status recorded after submission.
 
 - Type: Skills only
 - Version: 0.1.3
@@ -16,6 +16,8 @@ Published directory version remains 0.1.2. This candidate adds an English format
 
 ## Long description
 
+Read English Codex answers aloud in the right-side CastReader page, keeping headings, lists, tables, links and code visible while spoken words are highlighted. Sign in to your existing CastReader account for twenty free AI reading minutes per day or unlimited ordinary reading with Pro. Audio is prepared ahead for continuous reading; pause, resume and move between paragraphs. This workflow uses consumer membership and does not require a developer API key or Voice API credit.
+
 Ask Codex to add speech to your app or produce an MP3/WAV from text. CastReader includes a runnable local application, backend credential handling, current capability checks, live usage estimates, persistent audio jobs and recovery. Get playable files with an actual charge receipt. Retrying an interrupted request reuses its saved identity; an existing valid file is reused locally.
 
 Live generation requires your activated CastReader Voice API account and server-side API key. API trial and wallet credit are separate from CastReader App Pro. Current queued jobs support up to 500 normalized characters each; longer content needs explicit chunks. Streaming and realtime are not supported in this release.
@@ -28,7 +30,7 @@ Live generation requires your activated CastReader Voice API account and server-
 
 ## Release notes
 
-The 0.1.3 candidate automatically transfers complete Markdown to the CastReader membership reader. It retains headings, lists, tables, links and code, with real word-level highlighting driven by audio playback. Consumer login, the existing twenty free AI voice minutes per day and existing Pro entitlement govern reading; developer API credit is not used. English alignment is the initial supported language. The previous developer app/audio workflows remain available. No hosted MCP or original-chat DOM adapter is declared.
+Version 0.1.3 automatically transfers complete Markdown to the CastReader membership reader. It retains headings, lists, tables, links and code, with real word-level highlighting driven by audio playback. Consumer login, the existing twenty free AI voice minutes per day and existing Pro entitlement govern reading; developer API credit is not used. English alignment is the initial supported language. Subsequent chunks are preloaded and media-validated; bounded background membership verification and ordered actual-playback reporting remove per-paragraph network waits while preserving quota and failure gates. The previous developer app/audio workflows remain available. No hosted MCP or original-chat DOM adapter is declared.
 
 ## Review account and availability
 

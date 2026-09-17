@@ -1,6 +1,6 @@
 # CastReader for Codex
 
-Build a working speech feature, or turn text into a playable MP3/WAV with a cost receipt and resumable jobs.
+Read Codex answers in a formatted side panel with synchronized word highlighting. Also build speech features or generate MP3/WAV files with the separate developer Voice API.
 
 ## Install
 
@@ -11,7 +11,7 @@ codex plugin marketplace add vinxu/castreader-codex
 codex plugin add castreader@castreader
 ```
 
-Start a new Codex task after installation. In the published version, invoke `$build-voice-app` or `$generate-audio`, or select CastReader in the plugin picker. [OpenAI Plugins Directory](https://chatgpt.com/plugins/plugins_6aaaa52666208191b7e575b264f338a9) version 0.1.2 is published. This working tree also contains an unreleased, experimental `$read-answer` workflow. The Git release and directory release can update at different times; check the version in each installer.
+Start a new Codex task after installation. Invoke `$read-answer`, `$build-voice-app` or `$generate-audio`, or select CastReader in the plugin picker. Version 0.1.3 includes answer reading. The [OpenAI Plugins Directory](https://chatgpt.com/plugins/plugins_6aaaa52666208191b7e575b264f338a9) and this Git marketplace can publish at different times; check the version in each installer.
 
 Example requests:
 
@@ -20,7 +20,7 @@ Example requests:
 - “Resume the CastReader job in this output folder.”
 - “Read your previous answer aloud.” / “朗读刚才的回答。”
 
-The preview `$read-answer` workflow automatically opens the full original Markdown in Codex’s right-side CastReader page, checks CastReader login and membership, then reads with real word-level highlighting. Headings, lists, emphasis, links, tables, quotations and code remain displayed. It does not control the original chat DOM. This preview is English-only and is not yet the published directory version.
+The preview `$read-answer` workflow automatically opens the full original Markdown in Codex’s right-side CastReader page, checks CastReader login and membership, then reads with real word-level highlighting. Headings, lists, emphasis, links, tables, quotations and code remain displayed. It does not control the original chat DOM. This initial answer-reading release supports English. Other languages still require a reliable alignment service.
 
 Answer reading uses the existing consumer account: twenty free AI voice minutes each day and Pro unlimited ordinary reading. Actual playback time counts toward the daily allowance; cached replay does not generate again. Subscription uses the existing CastReader checkout. **No developer API key or wallet is required for this workflow.**
 
@@ -28,7 +28,7 @@ Answer reading uses the existing consumer account: twenty free AI voice minutes 
 node scripts/read-answer.mjs --markdown /absolute/private/answer.md --language en
 ```
 
-Codex opens the returned short loopback URL in its right-side browser automatically. Login and subscription return preserve the answer and position. Actual timestamps drive highlights; missing alignment stops reading. Browser autoplay restrictions may require the visible play button.
+Codex opens the returned short loopback URL in its right-side browser automatically. Login and subscription return preserve the answer and position. Actual timestamps drive highlights; missing alignment stops reading. A rolling buffer prepares the next three chunks, including playable media. Membership refresh and ordered listening reports run in the background during continuous playback, so an already prepared paragraph does not wait for a new network round trip. Manual starts and resumes recheck access; unavailable verification or usage reporting stops playback and preserves the position. Browser autoplay restrictions may require the visible play button.
 
 ## Developer Voice API requirements and cost
 

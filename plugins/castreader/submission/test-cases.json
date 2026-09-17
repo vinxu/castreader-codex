@@ -34,7 +34,13 @@
       "prompt": "Read my previous English answer with CastReader.",
       "expected": "Preserve the exact Markdown and automatically open the right-side reader. Require CastReader login, enforce existing Web free minutes or Pro, then start TTS and real word highlights without a developer API key.",
       "result": "Formatted answer, account status, synchronized reading; login or quota gate when required.",
-      "fixture": "English answer visible; existing consumer account. Public directory remains 0.1.2 until approved update."
+      "fixture": "English answer visible in Codex; consumer account with daily free allowance or existing Pro. No developer key. Use version 0.1.3."
+    },
+    {
+      "prompt": "Read a six-paragraph English answer without pausing between paragraphs.",
+      "expected": "Prepare the next three chunks and play them in order. Background membership and actual-playback reports must not delay a prepared transition. Preserve original Markdown and audio-clock highlights.",
+      "result": "Continuous ordered playback; pause/resume and previous/next remain usable.",
+      "fixture": "Consumer account. Local latency fixture uses two-second status and reporting responses; no live credentials in the bundle."
     }
   ],
   "negative": [
@@ -57,6 +63,11 @@
       "prompt": "Highlight the words in the original Codex answer as you read them.",
       "expected": "Check for a verified desktop DOM adapter and real alignment before generation. If absent, stop without charging; never bypass a tool's denial of access to Codex itself or claim a substitute panel is the original answer.",
       "reason": "No supported original-chat DOM adapter. The supported preview reads a separate, formatted side-panel page."
+    },
+    {
+      "prompt": "Keep reading cached audio after my daily free allowance is exhausted.",
+      "expected": "Stop, preserve position and offer the existing subscription flow. A delayed usage response cannot restore time already played. Failed reporting also stops playback.",
+      "reason": "Cached replay still counts actual listening time; preloading cannot bypass account or quota gates."
     }
   ]
 }

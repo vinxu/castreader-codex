@@ -30,9 +30,9 @@
     "privacyPolicyURL": "https://castreader.com/privacy-policy",
     "termsOfServiceURL": "https://castreader.com/terms-of-service",
     "defaultPrompt": [
+      "Read my previous English answer in the right-side page, preserve its formatting, and highlight each spoken word.",
       "Add a working text-to-speech feature to my app.",
-      "Generate an MP3 from this text and show the cost.",
-      "Read my previous English answer in the right-side page, preserve its formatting, and highlight each spoken word."
+      "Generate an MP3 from this text and show the cost."
     ],
     "brandColor": "#E9653B",
     "logo": "./assets/logo.png",
