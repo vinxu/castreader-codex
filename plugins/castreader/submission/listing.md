@@ -1,12 +1,12 @@
-# Version 0.1.3 — formatted answer reading
+# Version 0.1.4 — first-use answer reading
 
-Update to the published 0.1.2 developer release. Adds an English formatted-answer reader in the right-side page. The user has confirmed production Pro recognition, speech and synchronized highlights. Continuous playback is verified separately under delayed status/reporting responses. Directory approval is a separate status recorded after submission.
+Update to the published 0.1.3 reader release. Makes the first directory prompt self-contained: write an English answer and read it in the same turn, with no prior conversation required. The user has confirmed production Pro recognition, speech and synchronized highlights. Continuous playback is verified separately under delayed status/reporting responses. Directory approval is a separate status recorded after submission.
 
 - Type: Skills only
-- Version: 0.1.3
+- Version: 0.1.4
 - Name: CastReader
 - Category: Developer Tools
-- Short description: Read answers and build voice apps
+- Short description: Read answers aloud
 - Publisher: CAST AI PTE. LTD.; select this verified business identity in the portal. CastReader is the plugin's product name.
 - Website: https://voice.castreader.com/integrations/codex
 - Support: https://voice.castreader.com/integrations/codex#support
@@ -24,13 +24,13 @@ Live generation requires your activated CastReader Voice API account and server-
 
 ## Starter prompts
 
-1. Add a working text-to-speech feature to my app.
-2. Generate an MP3 from this text and show the cost.
-3. Read my previous English answer in the right-side page, preserving formatting and highlighting spoken words.
+1. Write a short English answer about how to stay focused while reading, then read that answer aloud in the right-side page with synchronized word highlighting.
+2. Add a working text-to-speech feature to my app.
+3. Generate an MP3 from this text and show the cost.
 
 ## Release notes
 
-Version 0.1.3 automatically transfers complete Markdown to the CastReader membership reader. It retains headings, lists, tables, links and code, with real word-level highlighting driven by audio playback. Consumer login, the existing twenty free AI voice minutes per day and existing Pro entitlement govern reading; developer API credit is not used. English alignment is the initial supported language. Subsequent chunks are preloaded and media-validated; bounded background membership verification and ordered actual-playback reporting remove per-paragraph network waits while preserving quota and failure gates. The previous developer app/audio workflows remain available. No hosted MCP or original-chat DOM adapter is declared.
+Version 0.1.4 replaces the context-dependent starter with an explicit write-and-read request, distinguishes supplied text from an existing answer, and handles missing source without inventing or substituting text. It automatically transfers complete Markdown to the CastReader membership reader. It retains headings, lists, tables, links and code, with real word-level highlighting driven by audio playback. Consumer login, the existing twenty free AI voice minutes per day and existing Pro entitlement govern reading; developer API credit is not used. English alignment is the initial supported language. Subsequent chunks are preloaded and media-validated; bounded background membership verification and ordered actual-playback reporting remove per-paragraph network waits while preserving quota and failure gates. The previous developer app/audio workflows remain available. No hosted MCP or original-chat DOM adapter is declared.
 
 ## Review account and availability
 

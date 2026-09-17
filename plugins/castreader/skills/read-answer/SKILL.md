@@ -9,7 +9,11 @@ Use the CastReader membership reading page in Codex's right-side browser. This w
 
 ## Preserve the answer
 
-1. Select the complete most recent substantive assistant answer before the request, unless the user selects another answer or excerpt. Use visible conversation context only. Do not read hidden reasoning, system messages, unrelated history or tool logs.
+1. Resolve the requested text from visible conversation context:
+   - If the user asks to write an answer and then read it, first write that answer visibly in the requested language, then use that exact Markdown for reading in the same turn. This works in a new conversation without a previous answer.
+   - Otherwise use the answer or text the user selects or supplies; for “read your previous answer,” use the complete most recent substantive assistant answer before the request.
+   - If the requested previous answer is absent, explain that this conversation has no available source and offer either supplying the text or generating a short English demo. Do not invent a previous answer, read this clarification instead, or search unrelated conversations. A request to read existing text does not authorize replacing it with a demo.
+   Do not read hidden reasoning, system messages, unrelated history or tool logs.
 2. Save the **exact original Markdown** in a private local `.md` file outside source control. Preserve headings, paragraphs, numbered and nested lists, emphasis, links, tables, blockquotes and code fences. Do not strip styling, summarize, translate, rewrite tables or remove code blocks. Do not scrape or patch the Codex application renderer.
 3. The initial synchronized-reading preview supports English. If the selected answer is another language, explain that reliable alignment is not ready for that language; do not generate unaligned audio or translate without a request. The full source must fit 120 KB; do not silently truncate a longer answer.
 

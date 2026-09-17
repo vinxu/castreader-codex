@@ -1,6 +1,6 @@
 {
   "name": "castreader",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Read formatted Codex answers with synchronized highlighting, build voice apps, and generate playable audio.",
   "author": {
     "name": "CAST AI PTE. LTD.",
@@ -19,7 +19,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "CastReader",
-    "shortDescription": "Read answers and build voice apps",
+    "shortDescription": "Read answers aloud",
     "longDescription": "Read English Codex answers in the right-side CastReader page while preserving Markdown formatting and highlighting spoken words. Sign in to CastReader for daily free AI voice minutes or existing Pro. Separately, build runnable voice features and generate MP3/WAV files with Voice API estimates and resumable jobs. The consumer reading account and developer API wallet are separate.",
     "developerName": "CAST AI PTE. LTD.",
     "category": "Developer Tools",
@@ -30,7 +30,7 @@
     "privacyPolicyURL": "https://castreader.com/privacy-policy",
     "termsOfServiceURL": "https://castreader.com/terms-of-service",
     "defaultPrompt": [
-      "Read my previous English answer in the right-side page, preserve its formatting, and highlight each spoken word.",
+      "Write a short English answer about how to stay focused while reading, then read that answer aloud in the right-side page with synchronized word highlighting.",
       "Add a working text-to-speech feature to my app.",
       "Generate an MP3 from this text and show the cost."
     ],

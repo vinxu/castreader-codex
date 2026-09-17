@@ -1,6 +1,6 @@
 # CastReader for Codex
 
-Read formatted answers with synchronized highlighting, build runnable speech features, and generate playable audio. Version 0.1.3 adds the English membership reader. The OpenAI directory and this Git marketplace can publish at different times; check the version before installing.
+Read formatted answers with synchronized highlighting, build runnable speech features, and generate playable audio. Version 0.1.4 makes the English membership reader easy to try in a new task. The OpenAI directory and this Git marketplace can publish at different times; check the version before installing.
 
 ```sh
 codex plugin marketplace add vinxu/castreader-codex

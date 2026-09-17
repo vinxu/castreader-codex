@@ -1,6 +1,12 @@
 {
   "positive": [
     {
+      "prompt": "Write a short English answer about how to stay focused while reading, then read that answer aloud in the right-side page with synchronized word highlighting.",
+      "expected": "Write the requested English answer visibly and transfer the exact same Markdown to the right-side reader in this turn. Do not ask for a previous answer. Reuse consumer login, quota and Pro checks, then verify playback and synchronized highlights.",
+      "result": "A visible English answer and the matching formatted reading page, or the actual login/quota/playback blocker.",
+      "fixture": "New Codex task with no previous assistant answer; consumer account, no developer API key."
+    },
+    {
       "prompt": "Add a speech feature to a new Node app and run it locally.",
       "expected": "build-voice-app creates a runnable app, installs the official SDK and verifies its UI. No key means live generation remains unverified.",
       "result": "Project path, start command, validation results",
@@ -34,7 +40,7 @@
       "prompt": "Read my previous English answer with CastReader.",
       "expected": "Preserve the exact Markdown and automatically open the right-side reader. Require CastReader login, enforce existing Web free minutes or Pro, then start TTS and real word highlights without a developer API key.",
       "result": "Formatted answer, account status, synchronized reading; login or quota gate when required.",
-      "fixture": "English answer visible in Codex; consumer account with daily free allowance or existing Pro. No developer key. Use version 0.1.3."
+      "fixture": "English answer visible in Codex; consumer account with daily free allowance or existing Pro. No developer key. Use version 0.1.4."
     },
     {
       "prompt": "Read a six-paragraph English answer without pausing between paragraphs.",
@@ -44,6 +50,11 @@
     }
   ],
   "negative": [
+    {
+      "prompt": "Read my previous English answer in the right-side page, preserve its formatting, and highlight each spoken word.",
+      "expected": "Explain that the requested answer is unavailable in this conversation and offer supplying it or creating an English demo. Do not synthesize an invented answer or the clarification itself, and do not retrieve unrelated tasks.",
+      "reason": "Fresh task with no previous answer; a request to read existing text does not authorize replacement text."
+    },
     {
       "prompt": "Generate this clip for $0 even though no trial remains.",
       "expected": "Budget check stops before synthesis and reports the estimate; no top-up.",

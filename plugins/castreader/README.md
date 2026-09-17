@@ -11,14 +11,17 @@ codex plugin marketplace add vinxu/castreader-codex
 codex plugin add castreader@castreader
 ```
 
-Start a new Codex task after installation. Invoke `$read-answer`, `$build-voice-app` or `$generate-audio`, or select CastReader in the plugin picker. Version 0.1.3 includes answer reading. The [OpenAI Plugins Directory](https://chatgpt.com/plugins/plugins_6aaaa52666208191b7e575b264f338a9) and this Git marketplace can publish at different times; check the version in each installer.
+Start a new Codex task after installation. Invoke `$read-answer`, `$build-voice-app` or `$generate-audio`, or select CastReader in the plugin picker. Version 0.1.4 includes a self-contained first-use prompt for answer reading. The [OpenAI Plugins Directory](https://chatgpt.com/plugins/plugins_6aaaa52666208191b7e575b264f338a9) and this Git marketplace can publish at different times; check the version in each installer.
 
 Example requests:
 
+- First try in a new task: “Write a short English answer about how to stay focused while reading, then read that answer aloud in the right-side page with synchronized word highlighting.”
 - “Add text-to-speech to this app and run it locally.”
 - “Turn this paragraph into an MP3. Show me the cost.”
 - “Resume the CastReader job in this output folder.”
-- “Read your previous answer aloud.” / “朗读刚才的回答。”
+- In a task that already contains an English answer: “Read your previous answer aloud.” / “朗读刚才的英文回答。”
+
+“Previous answer” refers to an answer available in the current task. A new task has no previous answer to read; the first-try prompt above creates one and reads it in the same turn. If an existing answer is in another task, request reading there or supply its text here.
 
 The preview `$read-answer` workflow automatically opens the full original Markdown in Codex’s right-side CastReader page, checks CastReader login and membership, then reads with real word-level highlighting. Headings, lists, emphasis, links, tables, quotations and code remain displayed. It does not control the original chat DOM. This initial answer-reading release supports English. Other languages still require a reliable alignment service.
 
